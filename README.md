@@ -1,5 +1,3 @@
-<img src="/paidy.png?raw=true" width=300 style="background-color:white;">
-
 # Paidy Take-Home Coding Exercises
 
 ## How to run?
