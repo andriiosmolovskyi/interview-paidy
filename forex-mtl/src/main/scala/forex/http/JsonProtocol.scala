@@ -1,17 +1,17 @@
 package forex.http
 
 import cats.effect.kernel.Concurrent
-import forex.domain.{ Currency, Pair, Price, Rate, Timestamp }
-import io.circe.generic.extras.decoding.{ EnumerationDecoder, UnwrappedDecoder }
-import io.circe.generic.extras.encoding.{ EnumerationEncoder, UnwrappedEncoder }
-import io.circe.{ Decoder, Encoder, Json }
-import org.http4s.circe._
-import org.http4s.{ EntityDecoder, EntityEncoder }
 import forex.domain.Currency.show
+import forex.domain._
 import forex.http.rates.Protocol.GetApiResponse
 import io.circe.generic.extras.Configuration
-import io.circe.generic.extras.semiauto.{ deriveConfiguredDecoder, deriveConfiguredEncoder }
-import io.circe.syntax.{ EncoderOps, KeyOps }
+import io.circe.generic.extras.decoding.{EnumerationDecoder, UnwrappedDecoder}
+import io.circe.generic.extras.encoding.{EnumerationEncoder, UnwrappedEncoder}
+import io.circe.generic.extras.semiauto.{deriveConfiguredDecoder, deriveConfiguredEncoder}
+import io.circe.syntax.{EncoderOps, KeyOps}
+import io.circe.{Decoder, DecodingFailure, Encoder, Json}
+import org.http4s.circe._
+import org.http4s.{EntityDecoder, EntityEncoder}
 
 import java.time.OffsetDateTime
 
@@ -37,7 +37,15 @@ trait JsonProtocol {
   implicit lazy val currencyEncoder: Encoder[Currency] =
     Encoder.instance[Currency] { show.show _ andThen Json.fromString }
   implicit lazy val currencyDecoder: Decoder[Currency] =
-    Decoder.instance[Currency] { _.value.as[String].map(Currency.fromString) }
+    Decoder.instance[Currency] {
+      _.value
+        .as[String]
+        .flatMap(
+          Currency
+            .fromString(_)
+            .toRight(DecodingFailure.apply("Cannot parse Currency", List.empty))
+        )
+    }
 
   implicit lazy val timestampEncoder: Encoder[Timestamp] =
     Encoder.instance(_.value.asJson)
