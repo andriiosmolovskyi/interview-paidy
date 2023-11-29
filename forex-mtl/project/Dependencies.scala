@@ -23,10 +23,6 @@ object Dependencies {
     def circe(artifact: String): ModuleID = "io.circe"    %% artifact % Versions.circe
     def http4s(artifact: String): ModuleID = "org.http4s" %% artifact % Versions.http4s
 
-    lazy val cats                = "org.typelevel"         %% "cats-core"                  % Versions.cats
-    lazy val catsEffect          = "org.typelevel"         %% "cats-effect"                % Versions.catsEffect
-    lazy val fs2                 = "co.fs2"                %% "fs2-core"                   % Versions.fs2
-
     lazy val http4sDsl           = http4s("http4s-dsl")
     lazy val http4sServer        = http4s("http4s-ember-server")
     lazy val http4sClient        = http4s("http4s-ember-client")
@@ -35,11 +31,16 @@ object Dependencies {
     lazy val circeGeneric        = circe("circe-generic")
     lazy val circeGenericExt     = circe("circe-generic-extras")
     lazy val circeParser         = circe("circe-parser")
+
+
+    lazy val cats                = "org.typelevel"         %% "cats-core"                  % Versions.cats
+    lazy val catsEffect          = "org.typelevel"         %% "cats-effect"                % Versions.catsEffect
+    lazy val fs2                 = "co.fs2"                %% "fs2-core"                   % Versions.fs2
     lazy val pureConfig          = "com.github.pureconfig" %% "pureconfig"                 % Versions.pureConfig
-    lazy val scaffeine           = "com.github.blemale"     % "scaffeine_2.13"             % Versions.scaffeine
+    lazy val scaffeine           = "com.github.blemale"    %% "scaffeine"                  % Versions.scaffeine
 
     // Compiler plugins
-    lazy val kindProjector       = "org.typelevel"         % "kind-projector_2.13.6"      % Versions.kindProjector
+    lazy val kindProjector       = "org.typelevel"         % "kind-projector_2.13.6"       % Versions.kindProjector
 
     // Runtime
     lazy val logback             = "ch.qos.logback"        %  "logback-classic"            % Versions.logback

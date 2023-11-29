@@ -19,10 +19,8 @@ class Module[F[_]: Async](config: ApplicationConfig, mapper: FunctionK[Future, F
 
   private val httpRatesService: RatesService[F]   = RatesServices.http[F](clientResource, config.oneFrame)
   private val cachedRatesService: RatesService[F] = RatesServices.cached[F](httpRatesService, mapper)
-
-  private val ratesProgram: RatesProgram[F] = RatesProgram[F](cachedRatesService)
-
-  private val ratesHttpRoutes: HttpRoutes[F] = new RatesHttpRoutes[F](ratesProgram).routes
+  private val ratesProgram: RatesProgram[F]       = RatesProgram[F](cachedRatesService)
+  private val ratesHttpRoutes: HttpRoutes[F]      = new RatesHttpRoutes[F](ratesProgram).routes
 
   private type PartialMiddleware = HttpRoutes[F] => HttpRoutes[F]
   private type TotalMiddleware   = HttpApp[F] => HttpApp[F]

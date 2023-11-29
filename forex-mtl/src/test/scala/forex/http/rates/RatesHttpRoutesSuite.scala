@@ -8,10 +8,10 @@ import forex.http._
 import forex.http.rates.Protocol.GetApiResponse
 import forex.programs.RatesProgram
 import forex.programs.rates.Protocol.GetRatesRequest
-import forex.programs.rates.errors.Error.{RateLookupFailed, RateNotFound}
+import forex.programs.rates.errors.Error.{ RateLookupFailed, RateNotFound }
 import io.circe.Json
-import io.circe.syntax.{EncoderOps, KeyOps}
-import org.http4s.{EntityDecoder, Method, Request, Response, Status, Uri}
+import io.circe.syntax.{ EncoderOps, KeyOps }
+import org.http4s.{ EntityDecoder, Method, Request, Response, Status, Uri }
 import org.mockito.Mockito.when
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -48,9 +48,9 @@ class RatesHttpRoutesSuite extends AnyWordSpec with Matchers with MockitoSugar w
     }
 
     "work properly when rate not found" in {
-      val pair = Pair(Currency.USD, Currency.EUR)
+      val pair    = Pair(Currency.USD, Currency.EUR)
       val request = GetRatesRequest(pair.from, pair.to)
-      val error = RateNotFound("Not found")
+      val error   = RateNotFound("Not found")
 
       val expectedJson = Json.obj(
         "msg" := "Not found"
@@ -68,9 +68,9 @@ class RatesHttpRoutesSuite extends AnyWordSpec with Matchers with MockitoSugar w
     }
 
     "work properly when other error occurs" in {
-      val pair = Pair(Currency.USD, Currency.EUR)
+      val pair    = Pair(Currency.USD, Currency.EUR)
       val request = GetRatesRequest(pair.from, pair.to)
-      val error = RateLookupFailed("Error")
+      val error   = RateLookupFailed("Error")
 
       val expectedJson = Json.obj(
         "msg" := "Error"

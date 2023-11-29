@@ -1,11 +1,11 @@
 package forex.services.rates.interpreters
 
 import cats.effect.unsafe.IORuntime
-import cats.effect.{IO, Resource}
+import cats.effect.{ IO, Resource }
 import forex.config.OneFrameConfig
 import forex.domain._
 import org.http4s.client.Client
-import org.http4s.{EntityDecoder, Request, Response}
+import org.http4s.{ EntityDecoder, Request, Response }
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.matchers.should.Matchers
@@ -26,8 +26,10 @@ class OneFrameHttpSuite extends AnyWordSpec with Matchers with MockitoSugar {
       val timestamp = Timestamp.now
       val rate      = Rate(pair, Price(1), timestamp)
 
-      when(client.expectOr[Seq[Rate]](any[Request[IO]])(any[Response[IO] => IO[Throwable]])(any[EntityDecoder[IO, Seq[Rate]]]))
-        .thenReturn(IO.pure(Seq(rate)))
+      when(
+        client
+          .expectOr[Seq[Rate]](any[Request[IO]])(any[Response[IO] => IO[Throwable]])(any[EntityDecoder[IO, Seq[Rate]]])
+      ).thenReturn(IO.pure(Seq(rate)))
 
       val actual = ratesService.get(pair).unsafeRunSync()
 

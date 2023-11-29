@@ -12,13 +12,8 @@ import org.http4s.server.Server
 import scala.concurrent.Future
 
 object Main extends IOApp {
-
-  override def run(args: List[String]): IO[ExitCode] = {
-    val server =
-      new Application[IO].build(futureToIOMapper)
-
-    server.use(_ => IO.never).as(ExitCode.Success)
-  }
+  override def run(args: List[String]): IO[ExitCode] =
+    new Application[IO].build(futureToIOMapper).use(_ => IO.never).as(ExitCode.Success)
 
 }
 

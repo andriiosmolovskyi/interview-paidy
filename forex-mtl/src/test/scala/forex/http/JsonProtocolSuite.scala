@@ -1,6 +1,6 @@
 package forex.http
 
-import forex.domain.{Currency, Pair, Price, Rate, Timestamp}
+import forex.domain.{ Currency, Pair, Price, Rate, Timestamp }
 import forex.http.rates.Protocol.GetApiResponse
 import io.circe.syntax.EncoderOps
 import org.scalatest.matchers.should.Matchers

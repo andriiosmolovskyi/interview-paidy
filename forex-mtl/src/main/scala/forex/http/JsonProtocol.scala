@@ -4,6 +4,7 @@ import cats.effect.kernel.Concurrent
 import forex.domain.Currency.show
 import forex.domain._
 import forex.http.rates.Protocol.GetApiResponse
+import forex.programs.rates.errors
 import io.circe.generic.extras.Configuration
 import io.circe.generic.extras.decoding.{EnumerationDecoder, UnwrappedDecoder}
 import io.circe.generic.extras.encoding.{EnumerationEncoder, UnwrappedEncoder}
@@ -26,6 +27,9 @@ trait JsonProtocol {
   implicit def jsonEncoder[A: Encoder, F[_]]: EntityEncoder[F, A]                 = jsonEncoderOf[F, A]
   implicit def seqDecoder[A: Decoder, F[_]: Concurrent]: EntityDecoder[F, Seq[A]] = jsonDecoder[Seq[A], F]
   implicit def seqEncoder[A: Encoder, F[_]]: EntityEncoder[F, Seq[A]]             = jsonEncoder[Seq[A], F]
+  implicit def errorEncoder[E <: errors.Error]: Encoder[E] = Encoder.instance { e =>
+    Json.obj("msg" := e.msg.asJson)
+  }
 
   implicit lazy val pairEncoder: Encoder[Pair]               = deriveConfiguredEncoder[Pair]
   implicit lazy val pairDecoder: Decoder[Pair]               = deriveConfiguredDecoder[Pair]

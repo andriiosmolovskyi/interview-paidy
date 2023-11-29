@@ -32,6 +32,7 @@ class RatesHttpRoutes[F[_]: Sync](rates: RatesProgram[F]) extends Http4sDsl[F] w
     case GET -> Root :? FromQueryParam(from) +& ToQueryParam(to) =>
       val error = RateLookupFailed(s"Error during decoding currencies for rates request, from = $from, to = $to")
       logger.warn(error.getMessage)
+
       BadRequest(error.asJson)
   }
 

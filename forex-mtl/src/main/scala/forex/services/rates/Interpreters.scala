@@ -14,7 +14,6 @@ object Interpreters {
   def http[F[_]: Concurrent](client: Resource[F, Client[F]], oneFrameConfig: OneFrameConfig): Algebra[F] =
     new OneFrameHttp[F](client, oneFrameConfig)
 
-  def cached[F[_]: Applicative](decorated: Algebra[F],
-                         mapper: FunctionK[Future, F]): Algebra[F] =
+  def cached[F[_]: Applicative](decorated: Algebra[F], mapper: FunctionK[Future, F]): Algebra[F] =
     new OneFrameCacheDecorator[F](decorated, mapper)
 }

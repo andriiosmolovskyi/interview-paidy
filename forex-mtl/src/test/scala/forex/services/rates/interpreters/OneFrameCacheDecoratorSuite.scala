@@ -4,7 +4,7 @@ import cats.effect.IO
 import cats.effect.unsafe.IORuntime
 import forex.domain._
 import forex.util.futureToIOMapper
-import org.mockito.Mockito.{times, verify, when}
+import org.mockito.Mockito.{ times, verify, when }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
@@ -17,9 +17,9 @@ class OneFrameCacheDecoratorSuite extends AnyWordSpec with Matchers with Mockito
 
   "OneFrameCacheDecorator" should {
     "work properly" in {
-      val pair = Pair(Currency.USD, Currency.EUR)
+      val pair      = Pair(Currency.USD, Currency.EUR)
       val timestamp = Timestamp.now
-      val rate = Rate(pair, Price(1), timestamp)
+      val rate      = Rate(pair, Price(1), timestamp)
 
       when(ratesService.get(pair)).thenReturn(IO.pure(Right(rate)))
 

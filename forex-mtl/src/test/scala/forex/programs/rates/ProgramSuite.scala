@@ -6,7 +6,7 @@ import forex.domain._
 import forex.programs.rates.Protocol.GetRatesRequest
 import forex.programs.rates.errors.toProgramError
 import forex.services.RatesService
-import forex.services.rates.errors.Error.OneFrameLookupFailed
+import forex.services.rates.errors.OneFrameLookupFailed
 import org.mockito.Mockito.when
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -33,9 +33,9 @@ class ProgramSuite extends AnyWordSpec with Matchers with MockitoSugar {
     }
 
     "work properly in case of error" in {
-      val pair = Pair(Currency.USD, Currency.EUR)
+      val pair    = Pair(Currency.USD, Currency.EUR)
       val request = GetRatesRequest(pair.from, pair.to)
-      val error = OneFrameLookupFailed("msg")
+      val error   = OneFrameLookupFailed("msg")
 
       when(ratesService.get(pair)).thenReturn(IO.pure(Left(error)))
 
