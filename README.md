@@ -16,6 +16,6 @@ Default URI for OneFrame is http://localhost:8080
 Default token `10dc303535874aeccc86a8251e6992f5`
 
 To change additional settings use following env variables: `$PORT` for port,
-`$BASE_URI` for base uri and `$TOKEN` for token
+`$BASE_URI` for base uri of OneFrame and `$TOKEN` for token
 
 Also you can change the values in `src/main/resources/application.conf` file
